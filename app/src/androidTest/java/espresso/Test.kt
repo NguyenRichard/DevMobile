@@ -4,6 +4,7 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
+import android.util.Log
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
@@ -48,12 +49,15 @@ class Test {
     @Test
     fun initialTaskFragment(){
         //onView(withId(R.id.tasks_recycler_view))
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPosition(0)).check(matches(withText("My first task")))
+
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(1, R.id.task_title)).check(matches((withText("My first task:"))))
+
+        Log.d("TAG","coucou")
     }
 
-
+/*
     @Test
-    fun clickCreateTaskButton() {
+    fun clickCreateFormTaskButton() {
         onView(withId(R.id.button_addTask)).perform(click())
         onView(withId(R.id.task_title_create_input)).check(matches(isDisplayed()))
         onView(withId(R.id.task_description_create_input)).check(matches(isDisplayed()))
@@ -91,4 +95,6 @@ class Test {
         onView(withId(R.id.tasks_recycler_view)).check(matches(withText("My first task")))
     }
 */
+
+ */
 }
