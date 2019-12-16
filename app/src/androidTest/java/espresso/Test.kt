@@ -16,6 +16,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.android21buttons.fragmenttestrule.FragmentTestRule
+import com.rng.tpapp.HeaderFragment
+
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -23,6 +26,9 @@ class Test {
 
     @get:Rule
     var activityScenarioRule = activityScenarioRule<MainActivity>()
+
+    @get:Rule
+    var headerFragmentTestRule = FragmentTestRule.create(HeaderFragment::class.java)
 
     companion object {
         const val USER_NAME = "richard nguyen"
@@ -33,14 +39,15 @@ class Test {
 
     @Test fun headerFragment(){
         onView(withId(R.id.user_name)).check(matches(withText("Hi $USER_NAME")))
+
     }
 
 
-    @Test
+   /* @Test
     fun initialTaskFragment(){
         onView(withId(R.id.tasks_recycler_view)).check(matches(withText("My first task")))
-    }
-/*
+    }*/
+
     @Test
     fun clickCreateTaskButton() {
         onView(withId(R.id.button_addTask)).perform(click())
@@ -69,7 +76,7 @@ class Test {
 
     //TODO check create button quand la tache est vide ? Meme effet que backButton pour l'instant
 
-    @Test
+/*    @Test
     fun createTask() {
         onView(withId(R.id.button_addTask)).perform(click())
         onView(withId(R.id.button_back)).perform((click()))
@@ -77,8 +84,7 @@ class Test {
         onView(withId(R.id.task_description_create_input)).perform(typeText(DESC_TASK_EXAMPLE))
         onView(withId(R.id.button_createTask)).perform(click())
         // is the task created
-        //onView(withId(R.id.tasks_recycler_view)).check(matches(withText("My first task")))
+        onView(withId(R.id.tasks_recycler_view)).check(matches(withText("My first task")))
     }
-
-     */
+*/
 }
