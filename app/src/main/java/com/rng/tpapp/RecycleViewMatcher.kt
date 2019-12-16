@@ -2,6 +2,7 @@ package com.rng.tpapp
 
 import android.content.res.Resources
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -22,7 +23,7 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
             internal var resources: Resources? = null
             internal var childView: View? = null
 
-            fun describeTo(description: Description) {
+            override fun describeTo(description: Description) {
                 var idDescription = Integer.toString(recyclerViewId)
                 if (this.resources != null) {
                     try {
@@ -37,7 +38,7 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
                 description.appendText("RecyclerView with id: $idDescription at position: $position")
             }
 
-            fun matchesSafely(view: View): Boolean {
+            override fun matchesSafely(view: View): Boolean {
 
                 this.resources = view.resources
 

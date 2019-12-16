@@ -4,7 +4,6 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
@@ -21,6 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.rng.tpapp.HeaderFragment
+import com.rng.tpapp.RecyclerViewMatcher
 
 
 @RunWith(AndroidJUnit4::class)
@@ -36,6 +36,9 @@ class Test {
         const val DESC_TASK_EXAMPLE = "Description of task 1 :)"
     }
 
+    private fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
+        return RecyclerViewMatcher(recyclerViewId)
+    }
 
     @Test fun headerFragment(){
         onView(withId(R.id.user_name)).check(matches(withText("Hi $USER_NAME")))
@@ -45,6 +48,7 @@ class Test {
     @Test
     fun initialTaskFragment(){
         //onView(withId(R.id.tasks_recycler_view))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPosition(0)).check(matches(withText("My first task")))
     }
 
 
