@@ -2,10 +2,14 @@ package espresso
 
 import androidx.test.ext.junit.rules.activityScenarioRule
 import android.app.Activity
+import android.os.Bundle
+import android.provider.Settings.Global.putInt
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -35,14 +39,14 @@ class Test {
 
     @Test fun headerFragment(){
         onView(withId(R.id.user_name)).check(matches(withText("Hi $USER_NAME")))
-
     }
 
 
-   /* @Test
+    @Test
     fun initialTaskFragment(){
-        onView(withId(R.id.tasks_recycler_view)).check(matches(withText("My first task")))
-    }*/
+        //onView(withId(R.id.tasks_recycler_view))
+    }
+
 
     @Test
     fun clickCreateTaskButton() {
