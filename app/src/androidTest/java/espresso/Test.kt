@@ -16,7 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.android21buttons.fragmenttestrule.FragmentTestRule
 import com.rng.tpapp.HeaderFragment
 
 
@@ -26,9 +25,6 @@ class Test {
 
     @get:Rule
     var activityScenarioRule = activityScenarioRule<MainActivity>()
-
-    @get:Rule
-    var headerFragmentTestRule = FragmentTestRule.create(HeaderFragment::class.java)
 
     companion object {
         const val USER_NAME = "richard nguyen"
