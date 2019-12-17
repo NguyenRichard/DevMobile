@@ -1,14 +1,19 @@
 package network
 
+import android.content.Context
+import android.preference.PreferenceManager
+import com.rng.tpapp.SHARED_PREF_TOKEN_KEY
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object Api {
-    private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/"
-    private const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwiZXhwIjoxNjA2ODk5OTYyfQ.KxmqV8fmIkaC5RWnML1Ir067KsLe9l5UhwxliEPQ2JE"
+class Api(private val context: Context) {
+    companion object {
+        private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/"
+        lateinit var INSTANCE: Api
+    }
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
@@ -16,7 +21,7 @@ object Api {
         OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $TOKEN")
+                    .addHeader("Authorization", "Bearer "+getToken())
                     .build()
                 chain.proceed(newRequest)
             }
@@ -31,4 +36,8 @@ object Api {
 
     val userService: UserService by lazy { retrofit.create(UserService::class.java) }
     val taskService: TaskService by lazy { retrofit.create(TaskService::class.java) }
+
+    private fun getToken() : String{
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(SHARED_PREF_TOKEN_KEY,"")
+    }
 }

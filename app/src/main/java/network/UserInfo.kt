@@ -1,6 +1,5 @@
 package network
 
-import android.graphics.Bitmap
 import com.squareup.moshi.Json
 
 data class UserInfo(

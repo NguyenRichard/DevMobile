@@ -1,8 +1,8 @@
 package com.rng.tpapp
 
-import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,11 @@ class AuthenticationFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_authentication, container, false)
 
         view.button_signup.setOnClickListener { signUp() }
-        view.authentication_button_login.setOnClickListener { login() }
+        view.button_login.setOnClickListener { login() }
+
+        if(PreferenceManager.getDefaultSharedPreferences(context).getString(SHARED_PREF_TOKEN_KEY,"") != ""){
+            startMainActivity()
+        }
 
         return view
     }
@@ -32,6 +36,12 @@ class AuthenticationFragment : Fragment() {
 
     private fun login(){
         findNavController().navigate(R.id.action_authenticationFragment_to_loginFragment)
+    }
+
+    private fun startMainActivity(){
+        val intent = Intent(this.context,MainActivity::class.java)
+        startActivity(intent)
+
     }
 }
 

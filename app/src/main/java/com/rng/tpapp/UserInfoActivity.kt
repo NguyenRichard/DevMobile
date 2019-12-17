@@ -8,10 +8,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_user_info.*
@@ -41,6 +43,15 @@ class UserInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_info)
         take_picture_button.setOnClickListener { askCameraPermissionAndOpenCamera() }
         upload_image_button.setOnClickListener { askStoragePermissionAndOpenStorage() }
+        logout_button.setOnClickListener { logOut() }
+    }
+
+    private fun logOut() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit{
+            remove(SHARED_PREF_TOKEN_KEY)
+        }
+        val intent = Intent(this,AuthenticationActivity::class.java)
+        startActivity(intent)
     }
 
     private fun askCameraPermissionAndOpenCamera() {
@@ -147,7 +158,7 @@ class UserInfoActivity : AppCompatActivity() {
             coroutineScope.launch{
                 Glide.with(this@UserInfoActivity).load(image).apply(RequestOptions.circleCropTransform()).into(previewPhoto)
 
-                Api.userService.updateAvatar(imageBody)
+                Api.INSTANCE.userService.updateAvatar(imageBody)
             }
         }
         else{

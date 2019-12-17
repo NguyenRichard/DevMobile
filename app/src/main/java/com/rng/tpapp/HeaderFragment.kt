@@ -36,9 +36,9 @@ class HeaderFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         coroutineScope.launch {
-            val userInfo = Api.userService.getInfo().body()
-            var greet_name = "Hi "+userInfo?.firstName+" "+userInfo?.lastName;
-            user_name.text = greet_name
+            val userInfo = Api.INSTANCE.userService.getInfo().body()
+            var greetName = "Hi "+userInfo?.firstName+" "+userInfo?.lastName;
+            user_name.text = greetName
             Glide.with(this@HeaderFragment).load(userInfo?.avatar?:"http://goo.gl/gEgYUd").apply(RequestOptions.circleCropTransform()).into(avatar)
         }
 
