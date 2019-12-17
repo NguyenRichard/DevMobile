@@ -38,18 +38,18 @@ class SignupFragment : Fragment() {
         val password_confirmation = text_input_password_confirmation.text.toString()
         if(firstname == "" || lastname == "" || email == ""
             || password == "" || password_confirmation == ""){
-            Toast.makeText(this.context,"You must fill all fields",Toast.LENGTH_SHORT)
+            Toast.makeText(this.context,"You must fill all fields",Toast.LENGTH_SHORT).show()
             return
         }
         if(password.compareTo(password_confirmation) != 0){
-            Toast.makeText(this.context,"The password confirmation does not match password.",Toast.LENGTH_SHORT)
+            Toast.makeText(this.context,"The password confirmation does not match password.",Toast.LENGTH_SHORT).show()
             return
         }
         val signUpForm = SignupForm(firstname,lastname,email,password,password_confirmation)
         coroutineScope.launch{
             val response = Api.INSTANCE.userService.signup(signUpForm)
             if(response.isSuccessful){
-                Toast.makeText(this@SignupFragment.context,"You have signed up!",Toast.LENGTH_SHORT)
+                Toast.makeText(this@SignupFragment.context,"You have signed up!",Toast.LENGTH_SHORT).show()
                 startAuthenticationActivity()
             }else{
                 Toast.makeText(this@SignupFragment.context,"The posting to the server has failed: "+response.errorBody(),Toast.LENGTH_SHORT).show()
