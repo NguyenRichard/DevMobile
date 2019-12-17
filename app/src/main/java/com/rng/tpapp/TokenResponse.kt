@@ -1,5 +1,7 @@
 package com.rng.tpapp
 
+import com.squareup.moshi.Json
+
 data class TokenResponse(
-    val token: String=""
+    @Json(name = "token")val token: String=""
 )

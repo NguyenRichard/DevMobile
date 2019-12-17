@@ -56,5 +56,15 @@
         app:layout_constraintTop_toBottomOf="@+id/text_input_email"
         app:layout_constraintVertical_bias="0.205" />
 
+    <Button
+        android:id="@+id/signup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password_confirmation" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

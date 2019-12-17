@@ -1,6 +1,7 @@
 package network
 
 import com.rng.tpapp.LoginForm
+import com.rng.tpapp.SignupForm
 import com.rng.tpapp.TokenResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -16,4 +17,7 @@ interface UserService {
 
     @POST("users/login")
     suspend fun login(@Body user: LoginForm): Response<TokenResponse>
+
+    @POST("users/sign_up")
+    suspend fun signup(@Body user: SignupForm): Response<TokenResponse>
 }
