@@ -21,4 +21,9 @@ class TasksRepository {
         val tasksResponse = tasksService.createTask(task)
         return tasksResponse.isSuccessful
     }
+
+    suspend fun editTask(task : Task) : Boolean {
+        val tasksResponse = tasksService.updateTask(task.id,task)
+        return tasksResponse.isSuccessful
+    }
 }

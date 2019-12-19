@@ -1,5 +1,6 @@
 package com.rng.tpapp
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +22,23 @@ class TasksAdapter(private val tasks: List<Task>, private val onDeleteClickListe
         return tasks.count()
     }
 
-    class TaskViewHolder(itemView: View, val delete : (Task)->Unit ) : RecyclerView.ViewHolder(itemView) {
+    class TaskViewHolder(itemView: View, val delete : (Task)->Unit) : RecyclerView.ViewHolder(itemView) {
         fun bind(task: Task) {
             itemView.task_title.text = task.title+": "
             itemView.task_description.text = task.description
 
             itemView.task_delet_button.setOnClickListener{delete(task)}
+            itemView.task_edit_button.setOnClickListener{edit(task)}
 
         }
+        private fun edit(task : Task){
+            val intent = Intent(itemView.context,TaskFormActivity::class.java)
+            intent.putExtra("id",task.id)
+            intent.putExtra("title",task.title)
+            intent.putExtra("description",task.description)
+            itemView.context.startActivity(intent)
+        }
+
     }
 
 }

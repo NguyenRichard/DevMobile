@@ -17,7 +17,19 @@ class TaskFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_form)
 
-        button_createTask.setOnClickListener{createTask()}
+        task_title_create_input.setText(intent.getStringExtra("title")?:"")
+        task_description_create_input.setText(intent.getStringExtra("description")?:"")
+
+        val id = intent.getStringExtra("id")
+
+        if(id == null){
+
+            button_createTask.setOnClickListener{createTask()}
+        }
+        else{
+            button_createTask.text = "Save"
+            button_createTask.setOnClickListener{editTask(id)}
+        }
         button_back.setOnClickListener{backToMain()}
     }
 
@@ -25,9 +37,20 @@ class TaskFormActivity : AppCompatActivity() {
         var title = task_title_create_input.text.toString()
         var description = task_description_create_input.text.toString()
         if(title != "" && description != ""){
-            var id = " "+title.hashCode()+description.hashCode()
+            var id = ""+title.hashCode()+description.hashCode()
             val newTask = Task(id, title, description)
             taskViewModel.createTask(newTask)
+        }
+
+        backToMain()
+    }
+
+    private fun editTask(id : String){
+        var title = task_title_create_input.text.toString()
+        var description = task_description_create_input.text.toString()
+        if(title != "" && description != ""){
+            val newTask = Task(id, title, description)
+            taskViewModel.editTask(newTask)
         }
 
         backToMain()
