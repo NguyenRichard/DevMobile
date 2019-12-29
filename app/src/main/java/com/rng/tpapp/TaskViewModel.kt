@@ -15,7 +15,7 @@ class TaskViewModel : ViewModel(){
         viewModelScope.launch {
             if(repository.deleteTask(task)){
                 tasks.remove(task)
-                taskAdapter?.notifyDataSetChanged()
+                taskAdapter.notifyDataSetChanged()
             }
         }
 
@@ -41,6 +41,18 @@ class TaskViewModel : ViewModel(){
             if(repository.createTask(task)){
                 tasks.add(task)
                 taskAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun editTask(task : Task){
+        viewModelScope.launch{
+            if(repository.editTask(task)){
+                var updated_task = tasks.find{it.id == task.id}
+                updated_task?.title = task.title
+                updated_task?.description = task.description
+                taskAdapter.notifyDataSetChanged()
+
             }
         }
     }

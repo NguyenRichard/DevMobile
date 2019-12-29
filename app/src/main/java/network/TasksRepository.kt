@@ -4,7 +4,7 @@ import android.util.Log
 import com.rng.tpapp.Task
 
 class TasksRepository {
-    private val tasksService = Api.taskService
+    private val tasksService = Api.INSTANCE.taskService
 
     suspend fun loadTasks(): List<Task>? {
         val tasksResponse = tasksService.getTasks()
@@ -19,6 +19,11 @@ class TasksRepository {
 
     suspend fun createTask(task : Task) : Boolean {
         val tasksResponse = tasksService.createTask(task)
+        return tasksResponse.isSuccessful
+    }
+
+    suspend fun editTask(task : Task) : Boolean {
+        val tasksResponse = tasksService.updateTask(task.id,task)
         return tasksResponse.isSuccessful
     }
 }

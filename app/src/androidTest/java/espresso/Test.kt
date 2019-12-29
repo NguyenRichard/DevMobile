@@ -37,12 +37,15 @@ class Test {
     var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     companion object {
-        const val USER_NAME = "richard nguyen"
+        const val USER_NAME = "Jordan Aurey"
         const val NAME_TASK_EXAMPLE_1 = "Task 1"
         const val DESC_TASK_EXAMPLE_1 = "Description of task 1 :)"
         const val NAME_TASK_EXAMPLE_2 = "Task 2"
         const val DESC_TASK_EXAMPLE_2 = "Description of task 2 :)"
         const val INDEX_DEL_TASK = 2
+        const val INDEX_EDIT_TASK = 0
+        const val NEW_NAME_TASK_EXAMPLE_ = "NEW title of task"
+        const val NEW_DESCRIPTION_TASK_EXAMPLE_ = "NEW Description of task :)"
     }
 
     private fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
@@ -59,8 +62,8 @@ class Test {
         // OK   //onView(withId(R.id.testView)).check(matches(withText("TextView TEST")))
         // OK   //onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_delet_button)).check(matches(isDisplayed()))
         //onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(1, R.id.task_title)).check(matches((withText("Je teste"))))
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches((withText("My first task: "))))
-        //Espresso.onView(ViewMatchers.withId(R.id.tasks_recycler_view)).check(matches((withText("My first task:"))))   //.perform(RecyclerViewActions.actionOnItemAtPosition<TasksAdapter.TaskViewHolder>(0, click()))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches(
+            isDisplayed()))  //(withText("My first task: "))))
     }
 
     @Test
@@ -98,7 +101,7 @@ class Test {
         onView(withId(R.id.task_description_create_input)).perform(typeText(DESC_TASK_EXAMPLE_1), closeSoftKeyboard())
         onView(withId(R.id.button_createTask)).perform(click())
         // is the task created ?
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(1, R.id.task_title)).check(matches((withText("$NAME_TASK_EXAMPLE_1: "))))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches((withText("$NAME_TASK_EXAMPLE_1: "))))
     }
 
     @Test
@@ -108,7 +111,32 @@ class Test {
         onView(withId(R.id.task_description_create_input)).perform(typeText(DESC_TASK_EXAMPLE_2), closeSoftKeyboard())
         onView(withId(R.id.button_createTask)).perform(click())
         // is the task created ?
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(2, R.id.task_description)).check(matches((withText(DESC_TASK_EXAMPLE_2))))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_description)).check(matches((withText(DESC_TASK_EXAMPLE_2))))
+    }
+
+
+
+    @Test
+    fun editTask_title(){
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_EDIT_TASK, R.id.task_edit_button)).perform(
+            click())
+        onView(withId(R.id.task_title_create_input)).perform(clearText())
+        onView(withId(R.id.task_title_create_input)).perform(typeText(NEW_NAME_TASK_EXAMPLE_), closeSoftKeyboard())
+        onView(withId(R.id.button_createTask)).perform(click())
+        //check title
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_EDIT_TASK, R.id.task_title)).check(matches((withText("$NEW_NAME_TASK_EXAMPLE_: "))))
+    }
+
+    @Test
+    fun editTask_description(){
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_EDIT_TASK, R.id.task_edit_button)).perform(
+            click())
+        onView(withId(R.id.task_description_create_input)).perform(clearText())
+        onView(withId(R.id.task_description_create_input)).perform(typeText(
+            NEW_DESCRIPTION_TASK_EXAMPLE_), closeSoftKeyboard())
+        onView(withId(R.id.button_createTask)).perform(click())
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_EDIT_TASK, R.id.task_description)).check(matches((withText(
+            NEW_DESCRIPTION_TASK_EXAMPLE_))))
     }
 
     @Test
