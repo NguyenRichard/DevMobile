@@ -5,6 +5,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
 import android.util.Log
+import android.view.View
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -27,6 +28,13 @@ import org.hamcrest.Matchers
 import org.hamcrest.Matchers.not
 import java.lang.NullPointerException
 import java.util.regex.Matcher
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewAssertion
+import org.hamcrest.Matchers.`is`
+
+
+
 
 
 @RunWith(AndroidJUnit4::class)
@@ -37,13 +45,13 @@ class Test {
     var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     companion object {
-        const val USER_NAME = "Jordan Aurey"
+        const val USER_NAME = "Jordan Aurey "
         const val NAME_TASK_EXAMPLE_1 = "Task 1"
         const val DESC_TASK_EXAMPLE_1 = "Description of task 1 :)"
         const val NAME_TASK_EXAMPLE_2 = "Task 2"
         const val DESC_TASK_EXAMPLE_2 = "Description of task 2 :)"
-        const val INDEX_DEL_TASK = 2
-        const val INDEX_EDIT_TASK = 0
+        const val INDEX_DEL_TASK = 1
+        const val INDEX_EDIT_TASK = 1
         const val NEW_NAME_TASK_EXAMPLE_ = "NEW title of task"
         const val NEW_DESCRIPTION_TASK_EXAMPLE_ = "NEW Description of task :)"
     }
@@ -59,11 +67,7 @@ class Test {
 
     @Test
     fun initialTaskFragment(){
-        // OK   //onView(withId(R.id.testView)).check(matches(withText("TextView TEST")))
-        // OK   //onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_delet_button)).check(matches(isDisplayed()))
-        //onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(1, R.id.task_title)).check(matches((withText("Je teste"))))
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches(
-            isDisplayed()))  //(withText("My first task: "))))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches((withText("My first task: "))))
     }
 
     @Test
@@ -92,7 +96,8 @@ class Test {
         onView(withId(R.id.user_name)).check(matches(withText("Hi $USER_NAME")))
     }
 
-    //TODO check create button quand la tache est vide ? Meme effet que backButton pour l'instant
+
+
 
     @Test
     fun createTask_checkTitle() {
@@ -101,7 +106,7 @@ class Test {
         onView(withId(R.id.task_description_create_input)).perform(typeText(DESC_TASK_EXAMPLE_1), closeSoftKeyboard())
         onView(withId(R.id.button_createTask)).perform(click())
         // is the task created ?
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches((withText("$NAME_TASK_EXAMPLE_1: "))))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(1, R.id.task_title)).check(matches((withText("$NAME_TASK_EXAMPLE_1: "))))
     }
 
     @Test
@@ -111,7 +116,7 @@ class Test {
         onView(withId(R.id.task_description_create_input)).perform(typeText(DESC_TASK_EXAMPLE_2), closeSoftKeyboard())
         onView(withId(R.id.button_createTask)).perform(click())
         // is the task created ?
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_description)).check(matches((withText(DESC_TASK_EXAMPLE_2))))
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(2, R.id.task_description)).check(matches((withText(DESC_TASK_EXAMPLE_2))))
     }
 
 
@@ -141,8 +146,6 @@ class Test {
 
     @Test
     fun deleteTask(){
-        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_DEL_TASK, R.id.task_delet_button)).perform(
-            click())
         try {
             onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_DEL_TASK, R.id.task_delet_button)).check(doesNotExist())
         }
@@ -152,17 +155,5 @@ class Test {
     }
 
 
-    // nettoie toutes les tâches
 
-    /*
-    @Test
-
-    fun cleanTasks(){
-        for (i in 0..findViewById()){
-            onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(i, R.id.task_delet_button)).perform(
-                click())
-        }
-    }
-    
-     */
 }
