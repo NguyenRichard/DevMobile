@@ -45,13 +45,13 @@ class Test {
     var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     companion object {
-        const val USER_NAME = "Jordan Aurey "
+        const val USER_NAME = "Jean Pierre"
         const val NAME_TASK_EXAMPLE_1 = "Task 1"
         const val DESC_TASK_EXAMPLE_1 = "Description of task 1 :)"
         const val NAME_TASK_EXAMPLE_2 = "Task 2"
         const val DESC_TASK_EXAMPLE_2 = "Description of task 2 :)"
         const val INDEX_DEL_TASK = 1
-        const val INDEX_EDIT_TASK = 1
+        const val INDEX_EDIT_TASK = 0
         const val NEW_NAME_TASK_EXAMPLE_ = "NEW title of task"
         const val NEW_DESCRIPTION_TASK_EXAMPLE_ = "NEW Description of task :)"
     }
@@ -65,10 +65,10 @@ class Test {
     }
 
 
-    @Test
+ /*   @Test
     fun initialTaskFragment(){
         onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(0, R.id.task_title)).check(matches((withText("My first task: "))))
-    }
+    }*/
 
     @Test
     fun clickCreateFormTaskButton() {
@@ -146,6 +146,9 @@ class Test {
 
     @Test
     fun deleteTask(){
+        onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_DEL_TASK, R.id.task_delet_button)).perform(
+            click())
+
         try {
             onView(withRecyclerView(R.id.tasks_recycler_view).atPositionOnView(INDEX_DEL_TASK, R.id.task_delet_button)).check(doesNotExist())
         }
